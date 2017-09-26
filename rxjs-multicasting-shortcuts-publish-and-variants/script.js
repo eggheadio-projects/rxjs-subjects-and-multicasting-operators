@@ -1,5 +1,5 @@
 var shared = Rx.Observable.interval(1000)
-  .do(x => console.log('source ' + x))
+  .do(x => console.log('source ' + x) || displayInPreview('source ' + x))
   .share();
 
 // share = publish().refCount()
@@ -9,17 +9,17 @@ var shared = Rx.Observable.interval(1000)
 // publishLast = multicast + AsyncSubject
 
 var observerA = {
-  next: function (x) { console.log('A next ' + x); },
-  error: function (err) { console.log('A error ' + err); },
-  complete: function () { console.log('A done'); },
+  next: function (x) { console.log('A next ' + x) || displayInPreview('A next ' + x); },
+  error: function (err) { console.log('A error ' + err) || displayInPreview('A error ' + err); },
+  complete: function () { console.log('A done') || displayInPreview('A done'); },
 };
 
 var subA = shared.subscribe(observerA);
 
 var observerB = {
-  next: function (x) { console.log('B next ' + x); },
-  error: function (err) { console.log('B error ' + err); },
-  complete: function () { console.log('B done'); },
+  next: function (x) { console.log('B next ' + x) || displayInPreview('B next ' + x); },
+  error: function (err) { console.log('B error ' + err) || displayInPreview('B error ' + err); },
+  complete: function () { console.log('B done') || displayInPreview('B done'); },
 };
 
 var subB;
@@ -29,17 +29,24 @@ setTimeout(function () {
 
 setTimeout(function () {
   subA.unsubscribe();
-  console.log('unsubscribed A');
+  console.log('unsubscribed A') || displayInPreview('unsubscribe A');
 }, 5000);
 
 setTimeout(function () {
   subB.unsubscribe();
-  console.log('unsubscribed B');
+  console.log('unsubscribed B') || displayInPreview('unsubscribed B');
 }, 7000);
 
 
 
 
+// display in plunker preview
+function displayInPreview(string) {
+  var newDiv = document.createElement("div"); 
+  var newContent = document.createTextNode(string); 
+  newDiv.appendChild(newContent);
+  document.body.appendChild(newDiv)
+}
 
 
 

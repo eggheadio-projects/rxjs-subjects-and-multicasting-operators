@@ -2,18 +2,18 @@ var subject = new Rx.ReplaySubject(100);
            // new Rx.BehaviorSubject(0);
 
 var observerA = {
-  next: function (x) { console.log('A next ' + x); },
-  error: function (err) { console.log('A error ' + err); },
-  complete: function () { console.log('A done'); },
+  next: function (x) { console.log('A next ' + x) || displayInPreview('A next ' + x); },
+  error: function (err) { console.log('A error ' + err) || displayInPreview('A error ' + err); },
+  complete: function () { console.log('A done') || displayInPreview('A done'); },
 };
 
 subject.subscribe(observerA);
-console.log('observerA subscribed');
+console.log('observerA subscribed') || displayInPreview('observerA subscribed');
 
 var observerB = {
-  next: function (x) { console.log('B next ' + x); },
-  error: function (err) { console.log('B error ' + err); },
-  complete: function () { console.log('B done'); },
+  next: function (x) { console.log('B next ' + x) || displayInPreview('B next ' + x); },
+  error: function (err) { console.log('B error ' + err) || displayInPreview('B error ' + err); },
+  complete: function () { console.log('B done') || displayInPreview('B done'); },
 };
 
 setTimeout(() => subject.next(1), 100);
@@ -29,11 +29,18 @@ setTimeout(() => subject.complete(), 350);
 
 setTimeout(function () {
   subject.subscribe(observerB);
-  console.log('observerB subscribed');
+  console.log('observerB subscribed') || displayInPreview('observerB subscribed');
 }, 400);
 
 
 
+// display in plunker preview
+function displayInPreview(string) {
+  var newDiv = document.createElement("div"); 
+  var newContent = document.createTextNode(string); 
+  newDiv.appendChild(newContent);
+  document.body.appendChild(newDiv)
+}
 
 
 
