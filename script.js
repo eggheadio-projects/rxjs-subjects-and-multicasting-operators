@@ -13,7 +13,7 @@ var observerA = {
 
 
 subject.subscribe(observerA);
-console.log('observerA subscribed');
+console.log('observerA subscribed') || displayInPreview('observerA subscribed');
 
 var observerB = {
   next: function (x) { console.log('B next ' + x) || displayInPreview('B next ' + x); },
@@ -34,7 +34,7 @@ setTimeout(() => subject.complete(), 350);
 
 setTimeout(function () {
   subject.subscribe(observerB);
-  console.log('observerB subscribed');
+  console.log('observerB subscribed') || displayInPreview('observerB subscribed');
 }, 400);
 
 
